@@ -41,3 +41,15 @@ func GetAlert(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(body)
 	return
 }
+
+func respondWithError(w http.ResponseWriter, code int, message string) {
+	w.WriteHeader(code)
+	body, _ := json.Marshal(&models.CustomError{Message: message, Code: code})
+	_, _ = w.Write(body)
+}
+
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	w.WriteHeader(code)
+	body, _ := json.Marshal(payload)
+	_, _ = w.Write(body)
+}

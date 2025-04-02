@@ -1,7 +1,6 @@
 package resources
 
 import (
-	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"middleware/config/internal/models"
 	resources "middleware/config/internal/services/resources"
@@ -23,19 +22,12 @@ func GetResources(w http.ResponseWriter, _ *http.Request) {
 		logrus.Errorf("error : %s", err.Error())
 		customError, isCustom := err.(*models.CustomError)
 		if isCustom {
-			// writing http code in header
-			w.WriteHeader(customError.Code)
-			// writing error message in body
-			body, _ := json.Marshal(customError)
-			_, _ = w.Write(body)
+			respondWithError(w, customError.Code, customError.Message)
 		} else {
-			w.WriteHeader(http.StatusInternalServerError)
+			respondWithError(w, http.StatusInternalServerError, "Une erreur est survenue")
 		}
 		return
 	}
-
-	w.WriteHeader(http.StatusOK)
-	body, _ := json.Marshal(resources)
-	_, _ = w.Write(body)
+	respondWithJSON(w, http.StatusOK, resources)
 	return
 }

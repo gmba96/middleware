@@ -5,7 +5,7 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 	"middleware/config/internal/models"
-	resources "middleware/config/internal/services/resources"
+	"middleware/config/internal/services/resources"
 	"net/http"
 )
 
@@ -19,25 +19,34 @@ import (
 // @Failure      500            "Something went wrong"
 // @Router       /resources/{id} [get]
 func GetResource(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	resourceId, _ := ctx.Value("id").(uuid.UUID)
+	resourceId, ok := r.Context().Value("resourceId").(uuid.UUID)
+	if !ok {
+		respondWithError(w, http.StatusBadRequest, "ID de resource invalide")
+		return
+	}
 
 	resource, err := resources.GetResourceById(resourceId)
 	if err != nil {
 		logrus.Errorf("error : %s", err.Error())
-		customError, isCustom := err.(*models.CustomError)
-		if isCustom {
-			w.WriteHeader(customError.Code)
-			body, _ := json.Marshal(customError)
-			_, _ = w.Write(body)
+		if customError, isCustom := err.(*models.CustomError); isCustom {
+			respondWithError(w, customError.Code, customError.Message)
 		} else {
-			w.WriteHeader(http.StatusInternalServerError)
+			respondWithError(w, http.StatusInternalServerError, "Something went wrong")
 		}
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	body, _ := json.Marshal(resource)
+	respondWithJSON(w, http.StatusOK, resource)
+}
+
+func respondWithError(w http.ResponseWriter, code int, message string) {
+	w.WriteHeader(code)
+	body, _ := json.Marshal(&models.CustomError{Message: message, Code: code})
 	_, _ = w.Write(body)
-	return
+}
+
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	w.WriteHeader(code)
+	body, _ := json.Marshal(payload)
+	_, _ = w.Write(body)
 }
