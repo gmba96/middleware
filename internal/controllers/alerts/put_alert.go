@@ -11,8 +11,8 @@ import (
 
 // UpdateAlert
 // @Tags         alerts
-// @Summary      Update an alert.
-// @Description  Update an alert.
+// @Summary      Met à jour une alerte
+// @Description  Met à jour une alerte par son ID
 // @Param        id   path      string  true  "Alert UUID formatted ID"
 // @Param        body body      models.Alert  true  "Alert data"
 // @Success      200  {object}  models.Alert

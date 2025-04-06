@@ -11,17 +11,16 @@ import (
 )
 
 // PutResource
-// @Tags resources
-// @Summary Met à jour une resource existante
-// @Description Modifie les données d'une resource identifiée par son ID
-// @Accept json
-// @Produce json
-// @Param resource body UpdateResourceRequest true "Données de la resource"
-// @Success 200 {object} models.Resource
-// @Failure 400 "Corps de requête invalide ou resource ID invalide"
-// @Failure 404 "Resource non trouvée"
-// @Failure 500 "Une erreur est survenue"
-// @Router /resources/{id} [put]
+// @Tags         resources
+// @Summary      Update a resource
+// @Description  Update a specific resource by ID
+// @Param        id            path      string          true  "Resource UUID formatted ID"
+// @Param        resource      body      models.Resource  true  "Resource data"
+// @Success      200           {object}  models.Resource
+// @Failure      400           "Invalid request body"
+// @Failure      422           "Cannot parse id"
+// @Failure      500           "Something went wrong"
+// @Router       /resources/{id} [put]
 func PutResource(w http.ResponseWriter, r *http.Request) {
 	// Récupération de l'ID de la resource dans le contexte
 	resourceId, ok := r.Context().Value("resourceId").(uuid.UUID)

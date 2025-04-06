@@ -11,8 +11,8 @@ import (
 
 // CreateAlert
 // @Tags         alerts
-// @Summary      Create a new alert.
-// @Description  Create a new alert.
+// @Summary      Créer une alerte
+// @Description  Créer une alerte
 // @Param        body body      CreateAlertRequest  true  "Alert data"
 // @Success      201  {object}  models.Alert
 // @Failure      400  "Invalid request body"

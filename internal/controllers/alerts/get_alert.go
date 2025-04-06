@@ -10,14 +10,14 @@ import (
 )
 
 // GetAlert
-// @Tags         resources
-// @Summary      Get a collection.
-// @Description  Get a collection.
-// @Param        id           	path      string  true  "Collection UUID formatted ID"
-// @Success      200            {object}  models.Resource
+// @Tags         alerts
+// @Summary      Récupère une alerte
+// @Description  Récupère une alerte par son ID
+// @Param        id           	path      string  true  "Alert UUID formatted ID"
+// @Success      200            {object}  models.Alert
 // @Failure      422            "Cannot parse id"
 // @Failure      500            "Something went wrong"
-// @Router       /resources/{id} [get]
+// @Router       /alerts/{id} [get]
 func GetAlert(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	alertId, _ := ctx.Value("id").(uuid.UUID)

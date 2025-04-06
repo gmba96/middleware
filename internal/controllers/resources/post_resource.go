@@ -13,14 +13,12 @@ import (
 
 // PostResource
 // @Tags         resources
-// @Summary      Create new resource
-// @Description  Create new resource
-// @Accept       json
-// @Produce      json
-// @Param        resource  body      CreateResourceRequest  true  "Resource data"
-// @Success      201       {object}  models.Resource
-// @Failure      400       "Invalid request body"
-// @Failure      500       "Something went wrong"
+// @Summary      Create a new resource
+// @Description  Create a new resource
+// @Param        resource      body      models.Resource  true  "Resource data"
+// @Success      201           {object}  models.Resource
+// @Failure      400           "Invalid request body"
+// @Failure      500           "Something went wrong"
 // @Router       /resources [post]
 func PostResource(w http.ResponseWriter, r *http.Request) {
 	var req CreateResourceRequest

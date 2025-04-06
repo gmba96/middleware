@@ -7,13 +7,13 @@ import (
 	"net/http"
 )
 
-// GetCollections
-// @Tags         collections
-// @Summary      Get collections.
-// @Description  Get collections.
-// @Success      200            {array}  models.Collection
-// @Failure      500             "Something went wrong"
-// @Router       /collections [get]
+// GetResources
+// @Tags         resources
+// @Summary      Get all resources
+// @Description  Retrieve a list of all resources
+// @Success      200            {array}   models.Resource
+// @Failure      500            "Something went wrong"
+// @Router       /resources [get]
 func GetResources(w http.ResponseWriter, _ *http.Request) {
 	// calling service
 	resources, err := resources.GetAllResources()

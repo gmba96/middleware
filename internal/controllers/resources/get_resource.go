@@ -11,9 +11,9 @@ import (
 
 // GetResource
 // @Tags         resources
-// @Summary      Get a collection.
-// @Description  Get a collection.
-// @Param        id           	path      string  true  "Collection UUID formatted ID"
+// @Summary      Récupère une ressource
+// @Description  Récupère une ressource par son ID
+// @Param        id           	path      string  true  "Resource UUID formatted ID"
 // @Success      200            {object}  models.Resource
 // @Failure      422            "Cannot parse id"
 // @Failure      500            "Something went wrong"

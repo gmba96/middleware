@@ -10,8 +10,8 @@ import (
 
 // DeleteAlert
 // @Tags         alerts
-// @Summary      Delete an alert.
-// @Description  Delete an alert.
+// @Summary      Supprime une alerte
+// @Description  Supprime une alerte par son ID
 // @Param        id   path      string  true  "Alert UUID formatted ID"
 // @Success      204  "Alert deleted successfully"
 // @Failure      404  "Alert not found"

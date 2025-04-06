@@ -8,13 +8,13 @@ import (
 	"net/http"
 )
 
-// GetCollections
-// @Tags         collections
-// @Summary      Get collections.
-// @Description  Get collections.
+// Get Alerts
+// @Tags         alerts
+// @Summary      Récupère toutes les alertes
+// @Description  Récupère toutes les alertes
 // @Success      200            {array}  models.Collection
 // @Failure      500             "Something went wrong"
-// @Router       /collections [get]
+// @Router       /alerts [get]
 func GetAlerts(w http.ResponseWriter, _ *http.Request) {
 	// calling service
 	alerts, err := alerts.GetAllAlerts()
