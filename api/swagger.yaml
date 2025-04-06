@@ -1,56 +1,251 @@
-basePath: /
-definitions:
-  models.Collection:
-    properties:
-      content:
-        type: string
-      id:
-        type: string
-    type: object
-info:
-  contact:
-    email: justine.bachelard@ext.uca.fr
-    name: Justine Bachelard.
-  description: API to manage collections.
-  title: middleware/example
-  version: 1.0.0
-paths:
-  /collections:
-    get:
-      description: Get collections.
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.Collection'
-            type: array
-        "500":
-          description: Something went wrong
-      summary: Get collections.
-      tags:
-      - collections
-  /collections/{id}:
-    get:
-      description: Get a collection.
-      parameters:
-      - description: Collection UUID formatted ID
-        in: path
-        name: id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Collection'
-        "422":
-          description: Cannot parse id
-        "500":
-          description: Something went wrong
-      summary: Get a collection.
-      tags:
-      - collections
-schemes:
-- http
 swagger: "2.0"
+info:
+  description: "API to manage resources and alerts."
+  title: "middleware/config"
+  contact:
+    name: "Justine Bachelard."
+    email: "justine.bachelard@ext.uca.fr"
+  version: "1.0.0"
+basePath: "/"
+schemes:
+  - "http"
+paths:
+  /resources:
+    get:
+      tags:
+        - "resources"
+      summary: "Get all resources"
+      description: "Retrieve a list of all resources."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Resource"
+        500:
+          description: "Something went wrong"
+    post:
+      tags:
+        - "resources"
+      summary: "Create a new resource"
+      description: "Create a new resource."
+      parameters:
+        - in: "body"
+          name: "resource"
+          description: "Resource data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateResourceRequest"
+      responses:
+        201:
+          description: "Resource created successfully"
+          schema:
+            $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid request body"
+        500:
+          description: "Something went wrong"
+  /resources/{id}:
+    get:
+      tags:
+        - "resources"
+      summary: "Get a resource"
+      description: "Retrieve a specific resource by ID."
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Resource UUID formatted ID"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Resource"
+        422:
+          description: "Cannot parse id"
+        500:
+          description: "Something went wrong"
+    put:
+      tags:
+        - "resources"
+      summary: "Update a resource"
+      description: "Update a specific resource by ID."
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Resource UUID formatted ID"
+        - in: "body"
+          name: "resource"
+          description: "Resource data"
+          required: true
+          schema:
+            $ref: "#/definitions/Resource"
+      responses:
+        200:
+          description: "Resource updated successfully"
+          schema:
+            $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid request body"
+        500:
+          description: "Something went wrong"
+    delete:
+      tags:
+        - "resources"
+      summary: "Delete a resource"
+      description: "Delete a specific resource by ID."
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Resource UUID formatted ID"
+      responses:
+        204:
+          description: "Resource deleted successfully"
+        404:
+          description: "Resource not found"
+        500:
+          description: "Something went wrong"
+  /alerts:
+    get:
+      tags:
+        - "alerts"
+      summary: "Get all alerts"
+      description: "Retrieve a list of all alerts."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Alert"
+        500:
+          description: "Something went wrong"
+    post:
+      tags:
+        - "alerts"
+      summary: "Create a new alert"
+      description: "Create a new alert."
+      parameters:
+        - in: "body"
+          name: "alert"
+          description: "Alert data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateAlertRequest"
+      responses:
+        201:
+          description: "Alert created successfully"
+          schema:
+            $ref: "#/definitions/Alert"
+        400:
+          description: "Invalid request body"
+        500:
+          description: "Something went wrong"
+  /alerts/{id}:
+    get:
+      tags:
+        - "alerts"
+      summary: "Get an alert"
+      description: "Retrieve a specific alert by ID."
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Alert UUID formatted ID"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Alert"
+        422:
+          description: "Cannot parse id"
+        500:
+          description: "Something went wrong"
+    put:
+      tags:
+        - "alerts"
+      summary: "Update an alert"
+      description: "Update a specific alert by ID."
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Alert UUID formatted ID"
+        - in: "body"
+          name: "alert"
+          description: "Alert data"
+          required: true
+          schema:
+            $ref: "#/definitions/Alert"
+      responses:
+        200:
+          description: "Alert updated successfully"
+          schema:
+            $ref: "#/definitions/Alert"
+        400:
+          description: "Invalid request body"
+        500:
+          description: "Something went wrong"
+    delete:
+      tags:
+        - "alerts"
+      summary: "Delete an alert"
+      description: "Delete a specific alert by ID."
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Alert UUID formatted ID"
+      responses:
+        204:
+          description: "Alert deleted successfully"
+        404:
+          description: "Alert not found"
+        500:
+          description: "Something went wrong"
+definitions:
+  Resource:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      uca_id:
+        type: "integer"
+      name:
+        type: "string"
+  CreateResourceRequest:
+    type: "object"
+    properties:
+      uca_id:
+        type: "integer"
+      name:
+        type: "string"
+  Alert:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      email:
+        type: "string"
+      all:
+        type: "boolean"
+      resource_id:
+        type: "string"
+  CreateAlertRequest:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      all:
+        type: "boolean"
+      resource_id:
+        type: "string"
