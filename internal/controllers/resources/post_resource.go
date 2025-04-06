@@ -47,5 +47,5 @@ func PostResource(w http.ResponseWriter, r *http.Request) {
 // CreateResourceRequest request struct
 type CreateResourceRequest struct {
 	Name  string `json:"name"`
-	UcaId int    `json:"ucaId"`
+	UcaId int    `json:"uca_id"`
 }
